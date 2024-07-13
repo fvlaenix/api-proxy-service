@@ -14,7 +14,7 @@ val DATABASE_PROPERTIES_PATH_STRING: String? = System.getenv("DATABASE_PROPERTIE
 
 val DATABASE_PROPERTIES_INPUT_STREAM: InputStream =
   DATABASE_PROPERTIES_PATH_STRING?.let { try { Path(it).inputStream() } catch (e: Exception) { throw Exception("Can't open file", e) } } ?:
-  LaunchServer::class.java.getResourceAsStream("database.properties") ?:
+  LaunchServer::class.java.getResourceAsStream("/database.properties") ?:
   throw IllegalStateException("Cannot find database properties in standard files")
 
 val OCR_SERVICE_HOSTNAME: String = System.getenv("OCR_SERVICE_HOSTNAME") ?: "localhost"

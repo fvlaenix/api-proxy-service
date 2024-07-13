@@ -41,6 +41,11 @@ kotlin {
     jvmToolchain(11)
 }
 
+task<JavaExec>("runServer") {
+    classpath = sourceSets.main.get().runtimeClasspath
+    mainClass.set("com.fvlaenix.RunServerKt")
+}
+
 protobuf {
     protoc {
         artifact = "com.google.protobuf:protoc:3.24.4"
