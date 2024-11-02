@@ -30,4 +30,8 @@ class ApiKeyConnector(val database: Database) {
   fun exists(apiKey: String): Boolean = transaction(database) {
     ApiKeyTable.select { ApiKeyTable.apiKey eq apiKey }.count() > 0
   }
+
+  fun getName(apiKey: String): String? = transaction(database) {
+    ApiKeyTable.select { ApiKeyTable.apiKey eq apiKey }.map { it[ApiKeyTable.name] }.firstOrNull()
+  }
 }
