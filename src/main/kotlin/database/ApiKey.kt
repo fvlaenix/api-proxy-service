@@ -31,7 +31,10 @@ class ApiKeyConnector(val database: Database) {
     ApiKeyTable.select { ApiKeyTable.apiKey eq apiKey }.count() > 0
   }
 
-  fun getName(apiKey: String): String? = transaction(database) {
-    ApiKeyTable.select { ApiKeyTable.apiKey eq apiKey }.map { it[ApiKeyTable.name] }.firstOrNull()
+  fun get(apiKey: String): ApiKeyData? = transaction(database) {
+    ApiKeyTable
+      .select { ApiKeyTable.apiKey eq apiKey }
+      .map { ApiKeyData(it[ApiKeyTable.name], it[ApiKeyTable.apiKey]) }
+      .firstOrNull()
   }
 }

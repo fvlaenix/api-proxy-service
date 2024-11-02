@@ -2,6 +2,8 @@ package com.fvlaenix
 
 import com.fvlaenix.ChannelUtils.STANDARD_IMAGE_CHANNEL_SIZE
 import com.fvlaenix.alive.protobuf.isAliveRequest
+import com.fvlaenix.translation.protobuf.TranslationFilesRequest
+import com.fvlaenix.translation.protobuf.TranslationFilesResponse
 import com.fvlaenix.translation.protobuf.TranslationRequest
 import com.fvlaenix.translation.protobuf.TranslationResponse
 import com.fvlaenix.translation.protobuf.TranslationServiceGrpcKt
@@ -19,7 +21,10 @@ object TranslationServiceUtil {
   
   suspend fun sendRequest(translationRequest: TranslationRequest): TranslationResponse =
     withOpenedChannel { it.translation(translationRequest) }
-  
+
+  suspend fun sendRequest(translationRequest: TranslationFilesRequest): TranslationFilesResponse =
+    withOpenedChannel { it.translationFile(translationRequest) }
+
   fun isAlive(): Boolean {
     return ChannelUtils.checkServerAliveness("Translation Service") {
       withOpenedChannel { 
